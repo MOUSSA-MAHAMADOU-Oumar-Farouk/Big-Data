@@ -9,17 +9,9 @@ Original file is located at
 
 import streamlit as st #Import the library after installation
 
-
-option = st.selectbox(
-    "How would you like to be contacted?",
-    ("Email", "Home phone", "Mobile phone"),
-)
-
-st.write("You selected:", option)
-
 option = st.selectbox(
     "How would you like to be contacted?",
     ("Email", "Home phone", "Mobile phone"),
     index=None,
-    placeholder="Select contact method...",
+    placeholder="Selectionner la catégorie du livre...",
 )
