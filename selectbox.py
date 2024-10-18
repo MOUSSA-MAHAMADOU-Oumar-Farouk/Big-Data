@@ -50,5 +50,5 @@ with col2:
     )
 
 # Afficher le résultat sélectionné dans les deux colonnes
-st.write("You selected in column 1:", option1)
-st.write("You selected in column 2:", option2)
+st.write("You selected in column 1:", categorie_selectionnee)
+
