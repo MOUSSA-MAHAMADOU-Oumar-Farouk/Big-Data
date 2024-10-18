@@ -16,3 +16,10 @@ option = st.selectbox(
 )
 
 st.write("You selected:", option)
+
+option = st.selectbox(
+    "How would you like to be contacted?",
+    ("Email", "Home phone", "Mobile phone"),
+    index=None,
+    placeholder="Select contact method...",
+)
