@@ -37,7 +37,7 @@ col1, col2 = st.columns(2)
 # Première colonne avec le selectbox pour les catégories de livres
 with col1:
     categorie_selectionnee = st.selectbox(
-        st.title(":blue[Catégories des livres]"),
+        st.header(:blue[Catégories des livres]),
         categories,  # Utiliser les catégories extraites de la base
         placeholder="Sélectionner la catégorie du livre..."
     )
