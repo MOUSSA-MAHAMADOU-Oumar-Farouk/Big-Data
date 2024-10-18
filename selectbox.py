@@ -52,3 +52,39 @@ with col2:
 # Afficher le résultat sélectionné dans les deux colonnes
 st.write("You selected in column 1:", categorie_selectionnee)
 
+#scale = alt.Scale(
+ #   domain=["sun", "fog", "drizzle", "rain", "snow"],
+  #  range=["#e7ba52", "#a7a7a7", "#aec7e8", "#1f77b4", "#9467bd"],)
+
+#color = alt.Color("weather:N", scale=scale)
+#brush = alt.selection_interval(encodings=["x"])
+#click = alt.selection_multi(encodings=["color"])
+
+
+
+# Définition des couleurs selon la catégorie
+scale = alt.Scale(
+    domain=categories,  # Remplacez par les catégories réelles
+    range=["#e7ba52", "#a7a7a7", "#aec7e8", "#a7a7a7","#aec7e8","#e7ba52"]  # Couleurs personnalisées
+)
+color = alt.Color("catégorie:N", scale=scale)
+
+# Sélection par clic multiple
+click = alt.selection_multi(encodings=["color"])
+
+# Création du diagramme à barres
+bars = (
+    alt.Chart(source)
+    .mark_bar()
+    .encode(
+        x="count()",
+        y="catégorie:N",  # Remplacez 'weather' par 'catégorie'
+        color=alt.condition(click, color, alt.value("lightgray")),
+    )
+    .properties(
+        width=550,
+    )
+    .add_selection(click)
+)
+
+bars
