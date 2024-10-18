@@ -50,11 +50,7 @@ with col2:
         "TEST TEST",
         ("Email", "Home phone", "Mobile phone")
     )
-
-# Afficher le résultat sélectionné dans les deux colonnes
-st.write("You selected in column 1:", categorie_selectionnee)
-
-# Définition des couleurs selon la catégorie
+    # Définition des couleurs selon la catégorie
 scale = alt.Scale(
     domain=categories,  # Utiliser les catégories réelles
     range=["#e7ba52", "#a7a7a7", "#aec7e8", "#a7a7a7", "#aec7e8", "#e7ba52"]
@@ -81,3 +77,8 @@ bars = (
 
 # Afficher le graphique dans Streamlit
 st.altair_chart(bars, use_container_width=True)
+
+# Afficher le résultat sélectionné dans les deux colonnes
+st.write("You selected in column 1:", categorie_selectionnee)
+
+
