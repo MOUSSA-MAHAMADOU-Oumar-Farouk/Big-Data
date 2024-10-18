@@ -1,7 +1,7 @@
-import streamlit as st  # Import the library after installation
-
+import streamlit as st
 import pandas as pd
 import random
+import altair as alt
 
 # Define categories, ratings, stock status, editions, and tax rates
 categories = ['Fiction', 'Science', 'Nature', 'History', 'Technology', 'Art']
@@ -14,14 +14,14 @@ tax_rate = 0.2
 # Generate the fictive dataset
 data = []
 
-for i in range(300):  # Generate 100 rows of data
+for i in range(300):
     category = random.choice(categories)
     title = random.choice(titles)
     rating = random.choice(ratings)
     stock = random.choice(stock_status)
     quantity = random.randint(0, 50) if stock == 'En stock' else 0
-    price_ht = round(random.uniform(5, 50), 2)  # Price without tax
-    price_ttc = round(price_ht * (1 + tax_rate), 2)  # Price with tax
+    price_ht = round(random.uniform(5, 50), 2)
+    price_ttc = round(price_ht * (1 + tax_rate), 2)
     edition = random.choice(editions)
     
     data.append([category, title, rating, stock, quantity, price_ht, price_ttc, edition])
@@ -30,7 +30,9 @@ for i in range(300):  # Generate 100 rows of data
 df_books = pd.DataFrame(data, columns=['categorie_livre', 'titre_livre', 'notation_clients', 'disponibilité', 
                                        'nombre_de_livre_disponible', 'prix_hors_taxe', 'prix_avec_taxe', 'edition'])
 
+# Extraire les catégories uniques
 categories = df_books['categorie_livre'].unique()
+
 # Créer deux colonnes
 col1, col2 = st.columns(2)
 
@@ -38,7 +40,7 @@ col1, col2 = st.columns(2)
 with col1:
     categorie_selectionnee = st.selectbox(
         "Catégories des livres",
-        categories,  # Utiliser les catégories extraites de la base
+        categories,
         placeholder="Sélectionner la catégorie du livre..."
     )
 
@@ -52,33 +54,23 @@ with col2:
 # Afficher le résultat sélectionné dans les deux colonnes
 st.write("You selected in column 1:", categorie_selectionnee)
 
-#scale = alt.Scale(
- #   domain=["sun", "fog", "drizzle", "rain", "snow"],
-  #  range=["#e7ba52", "#a7a7a7", "#aec7e8", "#1f77b4", "#9467bd"],)
-
-#color = alt.Color("weather:N", scale=scale)
-#brush = alt.selection_interval(encodings=["x"])
-#click = alt.selection_multi(encodings=["color"])
-
-
-
 # Définition des couleurs selon la catégorie
 scale = alt.Scale(
-    domain=categories,  # Remplacez par les catégories réelles
-    range=["#e7ba52", "#a7a7a7", "#aec7e8", "#a7a7a7","#aec7e8","#e7ba52"]  # Couleurs personnalisées
+    domain=categories,  # Utiliser les catégories réelles
+    range=["#e7ba52", "#a7a7a7", "#aec7e8", "#a7a7a7", "#aec7e8", "#e7ba52"]
 )
-color = alt.Color("catégorie:N", scale=scale)
+color = alt.Color("categorie_livre:N", scale=scale)
 
 # Sélection par clic multiple
 click = alt.selection_multi(encodings=["color"])
 
 # Création du diagramme à barres
 bars = (
-    alt.Chart(source)
+    alt.Chart(df_books)  # Utiliser df_books comme source de données
     .mark_bar()
     .encode(
         x="count()",
-        y="catégorie:N",  # Remplacez 'weather' par 'catégorie'
+        y="categorie_livre:N",  # Utiliser la colonne 'categorie_livre' de votre DataFrame
         color=alt.condition(click, color, alt.value("lightgray")),
     )
     .properties(
@@ -87,4 +79,5 @@ bars = (
     .add_selection(click)
 )
 
-bars
+# Afficher le graphique dans Streamlit
+st.altair_chart(bars, use_container_width=True)
