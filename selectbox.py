@@ -9,9 +9,21 @@ Original file is located at
 
 import streamlit as st #Import the library after installation
 
+col1, col2 = st.columns(2)
+
+with col1:
+
 option = st.selectbox(
-    "How would you like to be contacted?",
+    "Catégories",
     ("Email", "Home phone", "Mobile phone"),
     index=None,
     placeholder="Selectionner la catégorie du livre...",
 )
+
+with col2:
+    option = st.selectbox(
+    "TEST TEST",
+    ("Email", "Home phone", "Mobile phone"),
+)
+
+st.write("You selected:", option)
