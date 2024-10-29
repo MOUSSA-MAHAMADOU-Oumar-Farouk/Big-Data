@@ -81,4 +81,4 @@ st.altair_chart(bars, use_container_width=True)
 # Afficher le résultat sélectionné dans les deux colonnes
 st.write("You selected in column 1:", categorie_selectionnee)
 
-
+st.write("RODRI")
